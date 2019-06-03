@@ -50,3 +50,5 @@ moveY = (input_down - input_up) * ply_spd;
 //---------Aplica o movimento
 x += moveX;
 y += moveY;
+
+//comentário para testar o commit
