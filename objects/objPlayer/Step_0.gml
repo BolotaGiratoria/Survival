@@ -1,37 +1,37 @@
 #region //Get player input
+
+	//Set HasControl to false, when is changing room
 	if(hasControl) {
-		//---------Atualiza inputs
+		//Check Inputs
 		inputLeft = keyboard_check(vk_left) || keyboard_check(ord("A"));
 		inputRight = keyboard_check(vk_right) || keyboard_check(ord("D"));
-		inputUp	= keyboard_check(vk_up);
-		inputDown = keyboard_check(vk_down);
+		inputUp	= keyboard_check(vk_up)|| keyboard_check(ord("W"));
+		inputDown = keyboard_check(vk_down)|| keyboard_check(ord("S"));
 		inputWalk = keyboard_check(vk_control);
 		inputRun = keyboard_check(vk_shift);
 		jumpKey = keyboard_check_pressed(vk_space);
 
-		//---------Muda a velocidade
+		//Change Speed
 		if (inputWalk or inputRun){
 			playSpeed = abs((inputWalk*slowSpeed) - (inputRun*runSpeed));
 		} else {
 			playSpeed = normalSpeed;
 		}
 
-		//---------Seta 0 nas variaveis
+		//Reset variables
 		var moveX = 0;
 		var moveY = 0;
 
-		//---------Logica de movimento
+		//Moviment Logic
 		moveX = (inputRight - inputLeft) * playSpeed;
 		moveY = (inputDown - inputUp) * playSpeed;
+		//Dont Allow to move Y If is jumping
 		if(isJumping) {
 			moveY = 0;
 		}
-	
-		if (inputLeft) || (inputRight) || (inputUp) || (inputDown) || (jumpKey) {
-			controller = 0;
-		}
 
 	} else {
+		//Dont allow move if hasnt control
 		inputRight = 0;
 		inputLeft = 0;
 		inputDown = 0;
@@ -41,15 +41,11 @@
 #endregion
 
 #region //Calculate moviment
-
 	horizontalSpeed = moveX + gunKickX + injureKickX;
 	verticalSpeed = moveY + gunKickY + injureKickY;
-
 #endregion
 
 #region //Jumping
-
-
 if(jumpPosition > 0) {
 	jumpMove -= playerGravity;
 	jumpPosition += jumpMove;
@@ -73,17 +69,18 @@ if (canJump > 0) && (jumpKey) {
 }
 #endregion
 
-//Reset Variables
-gunKickX = 0;
-injureKickX = 0;
-gunKickY = 0;
-injureKickY = 0;
+#region //Reset Kick back variables
+	gunKickX = 0;
+	injureKickX = 0;
+	gunKickY = 0;
+	injureKickY = 0;
+#endregion
 
 #region //Collide and move
 //HorizontalCollision
-if(place_meeting(x+horizontalSpeed, y, objWall)) {
+if(place_meeting(x+horizontalSpeed, y, objCollision)) {
 	//Move player to the horizontal until player collide to wall
-	while(!place_meeting(x+sign(horizontalSpeed), y, objWall)) {
+	while(!place_meeting(x+sign(horizontalSpeed), y, objCollision)) {
 		x = x + sign(horizontalSpeed)
 	}
 	horizontalSpeed = 0;
@@ -91,18 +88,28 @@ if(place_meeting(x+horizontalSpeed, y, objWall)) {
 x = x + horizontalSpeed;
 
 //VerticalCollision
-if(place_meeting(x, y+verticalSpeed, objWall)) {
+if(place_meeting(x, y+verticalSpeed, objCollision)) {
 	//Move player to the vertical until player collide to wall
-	while(!place_meeting(x, y+sign(verticalSpeed), objWall)) {
+	while(!place_meeting(x, y+sign(verticalSpeed), objCollision)) {
 		y = y + sign(verticalSpeed);
 	}
 	
 	verticalSpeed = 0;
+	//If Collides with something when jump, move back to origin
 	if(firstJumpYPosition != noone) {
 		jumpMove = firstJumpYPosition - y;
 	}
+	//Change direction of jump
 	jumpMove = -jumpMove;
 }
+
+if(!(objPlayer.x >= 0 and objPlayer.x <= room_width and
+       objPlayer.y >= 0 and objPlayer.y <= room_height))
+    {
+      verticalSpeed = 0
+	  //Change direction of jump
+		jumpMove = -jumpMove;
+    }
 y = y + verticalSpeed - jumpMove;
 
 
@@ -110,6 +117,7 @@ y = y + verticalSpeed - jumpMove;
 
 #region Animations
 
+//Change sprite checking where player is watching
 var aimside = sign(mouse_x - x);
 if(aimside != 0) image_xscale = aimside;
 
@@ -119,8 +127,10 @@ if(isJumping) {
 	sprite_index = sprPlayerJump;
 	image_speed = 0;
 	//change sprites to jumps sprite
-	 image_index = 0
+	image_index = 0
 } else {
+	
+	//Allow player to jump if he has just pass from wall
 	canJump = 10;
 	if(sprite_index == sprPlayerJump) {
 		audio_sound_pitch(snLanding, choose(0.8, 1.0, 1.2, 1.4));

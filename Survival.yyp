@@ -290,7 +290,7 @@
             "Key": "c16c13ae-e2e2-47d5-ac95-aba1625bb520",
             "Value": {
                 "id": "673ff45b-2ec0-4ac6-add4-46dd8b2f35aa",
-                "resourcePath": "objects\/objWall\/objWall.yy",
+                "resourcePath": "objects\/objCollision\/objCollision.yy",
                 "resourceType": "GMObject"
             }
         },

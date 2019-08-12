@@ -4,7 +4,7 @@
 if(instance_exists(follow)) {
 	xTo = follow.x;
 	yTo = follow.y;
-	/*
+	/*TODO
 	if((follow).object_index == objPlayerDead) {
 		x = xTo;
 		y = yTo;
