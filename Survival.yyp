@@ -183,6 +183,14 @@
             }
         },
         {
+            "Key": "6ce8db29-2288-4d1d-8fc5-c133b5369b6f",
+            "Value": {
+                "id": "a18574b1-c7ac-4c86-9b6c-c83bc97803b5",
+                "resourcePath": "objects\\objColision\\objColision.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "7552dd0d-8a05-49b5-86e7-8dd5ec350be7",
             "Value": {
                 "id": "92678c5f-9faa-4275-ba35-9eb79e158f93",
@@ -327,11 +335,27 @@
             }
         },
         {
+            "Key": "e0051420-db91-4d60-8af3-a90d519b71b5",
+            "Value": {
+                "id": "a7f78fae-b7b8-473d-85e2-92db60ff6616",
+                "resourcePath": "views\\e0051420-db91-4d60-8af3-a90d519b71b5.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "e292ef92-e6c6-4df2-b584-8f92cd638ad5",
             "Value": {
                 "id": "1f24d88a-4464-4eb8-86d5-8ba9c03fddc3",
                 "resourcePath": "scripts\/scriptAnimationUPDown\/scriptAnimationUPDown.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "e3671bae-e732-4550-8ce1-df16e67c50f6",
+            "Value": {
+                "id": "c5f8fc84-487d-4878-a3d7-8b9564e88850",
+                "resourcePath": "sprites\\sprColision\\sprColision.yy",
+                "resourceType": "GMSprite"
             }
         },
         {

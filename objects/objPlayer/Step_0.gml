@@ -81,9 +81,9 @@ injureKickY = 0;
 
 #region //Collide and move
 //HorizontalCollision
-if(place_meeting(x+horizontalSpeed, y, objWall)) {
+if(place_meeting(x+horizontalSpeed, y, objColision)) {
 	//Move player to the horizontal until player collide to wall
-	while(!place_meeting(x+sign(horizontalSpeed), y, objWall)) {
+	while(!place_meeting(x+sign(horizontalSpeed), y, objColision)) {
 		x = x + sign(horizontalSpeed)
 	}
 	horizontalSpeed = 0;
@@ -91,9 +91,9 @@ if(place_meeting(x+horizontalSpeed, y, objWall)) {
 x = x + horizontalSpeed;
 
 //VerticalCollision
-if(place_meeting(x, y+verticalSpeed, objWall)) {
+if(place_meeting(x, y+verticalSpeed, objColision)) {
 	//Move player to the vertical until player collide to wall
-	while(!place_meeting(x, y+sign(verticalSpeed), objWall)) {
+	while(!place_meeting(x, y+sign(verticalSpeed), objColision)) {
 		y = y + sign(verticalSpeed);
 	}
 	
