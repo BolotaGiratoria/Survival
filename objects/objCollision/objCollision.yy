@@ -1,5 +1,5 @@
 {
-    "id": "c16c13ae-e2e2-47d5-ac95-aba1625bb520",
+    "id": "6ce8db29-2288-4d1d-8fc5-c133b5369b6f",
     "modelName": "GMObject",
     "mvc": "1.0",
     "name": "objCollision",
@@ -24,6 +24,6 @@
     "physicsStartAwake": true,
     "properties": null,
     "solid": false,
-    "spriteId": "abedc964-31c6-4ceb-b16d-3639422b8019",
+    "spriteId": "e3671bae-e732-4550-8ce1-df16e67c50f6",
     "visible": true
 }
