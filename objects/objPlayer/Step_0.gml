@@ -77,41 +77,58 @@ if (canJump > 0) && (jumpKey) {
 #endregion
 
 #region //Collide and move
-//HorizontalCollision
-if(place_meeting(x+horizontalSpeed, y, objCollision)) {
-	//Move player to the horizontal until player collide to wall
-	while(!place_meeting(x+sign(horizontalSpeed), y, objCollision)) {
-		x = x + sign(horizontalSpeed)
+	//HorizontalCollision
+	if(place_meeting(x+horizontalSpeed, y, objCollision)) {
+		//Move player to the horizontal until player collide to wall
+		while(!place_meeting(x+sign(horizontalSpeed), y, objCollision)) {
+			x = x + sign(horizontalSpeed)
+		}
+		horizontalSpeed = 0;
 	}
-	horizontalSpeed = 0;
-}
-x = x + horizontalSpeed;
+	x = x + horizontalSpeed;
 
-//VerticalCollision
-if(place_meeting(x, y+verticalSpeed, objCollision)) {
-	//Move player to the vertical until player collide to wall
-	while(!place_meeting(x, y+sign(verticalSpeed), objCollision)) {
-		y = y + sign(verticalSpeed);
-	}
+	//VerticalCollision
+	if(place_meeting(x, y+verticalSpeed, objCollision)) {
+		//Move player to the vertical until player collide to wall
+		while(!place_meeting(x, y+sign(verticalSpeed), objCollision)) {
+			y = y + sign(verticalSpeed);
+		}
 	
-	verticalSpeed = 0;
-	//If Collides with something when jump, move back to origin
-	if(firstJumpYPosition != noone) {
-		jumpMove = firstJumpYPosition - y;
-	}
-	//Change direction of jump
-	jumpMove = -jumpMove;
-}
-
-if(!(objPlayer.x >= 0 and objPlayer.x <= room_width and
-       objPlayer.y >= 0 and objPlayer.y <= room_height))
-    {
-      verticalSpeed = 0
-	  //Change direction of jump
+		verticalSpeed = 0;
+		//If Collides with something when jump, move back to origin
+		if(firstJumpYPosition != noone) {
+			jumpMove = firstJumpYPosition - y;
+		}
+		//Change direction of jump
 		jumpMove = -jumpMove;
-    }
-y = y + verticalSpeed - jumpMove;
+	}
 
+	if(!(objPlayer.x >= 0 and objPlayer.x <= room_width and
+	       objPlayer.y >= 0 and objPlayer.y <= room_height))
+	    {
+	      verticalSpeed = 0
+		  //Change direction of jump
+			jumpMove = -jumpMove;
+	    }
+	y = y + verticalSpeed - jumpMove;
+
+	
+	#region //Check if player go out of room
+		var border = 64;
+		if(x >= room_width - border){
+			x = room_width - border; 
+		}
+		if(x <= border){
+			x = border;
+		}
+		//wrap y
+		if(y >= room_height - border){
+			y = room_height - border;
+		}
+		if(y <= border){
+			y = border;
+		}
+	#endregion
 
 #endregion
 
