@@ -77,32 +77,54 @@ if (canJump > 0) && (jumpKey) {
 #endregion
 
 #region //Collide and move
-//HorizontalCollision
-if(place_meeting(x+horizontalSpeed, y, objCollision)) {
-	//Move player to the horizontal until player collide to wall
-	while(!place_meeting(x+sign(horizontalSpeed), y, objCollision)) {
-		x = x + sign(horizontalSpeed)
-	}
-	horizontalSpeed = 0;
-}
+
 x = x + horizontalSpeed;
-
-//VerticalCollision
-if(place_meeting(x, y+verticalSpeed, objCollision)) {
-	//Move player to the vertical until player collide to wall
-	while(!place_meeting(x, y+sign(verticalSpeed), objCollision)) {
-		y = y + sign(verticalSpeed);
+// Right collisions
+if horizontalSpeed > 0 {
+	if (scriptGridPlaceMeeting(self, objLevel.levelGrid)) {
+		x = bbox_right&~(CELLWIDTH-1);
+		x -= bbox_right-x;
+		horizontalSpeed = 0;
 	}
-	
-	verticalSpeed = 0;
-	//If Collides with something when jump, move back to origin
-	if(firstJumpYPosition != noone) {
-		jumpMove = firstJumpYPosition - y;
+} else if horizontalSpeed < 0 {
+	// Left collisions
+	if (scriptGridPlaceMeeting(self, objLevel.levelGrid)) {
+		x = bbox_left&~(CELLWIDTH-1);
+		x += CELLWIDTH+x-bbox_left;
+		horizontalSpeed = 0;
 	}
-	//Change direction of jump
-	jumpMove = -jumpMove;
 }
 
+
+// Vertical collisions
+if(verticalSpeed > playSpeed) verticalSpeed = playSpeed;
+y += verticalSpeed - jumpMove;
+if verticalSpeed > 0 {
+	// Bottom collisions
+	if (scriptGridPlaceMeeting(self, objLevel.levelGrid)) {
+		y = bbox_bottom&~(CELLHEIGHT-1);
+		y -= bbox_bottom-y;
+		verticalSpeed = 0;
+		if(firstJumpYPosition != noone) {
+			jumpMove = firstJumpYPosition - y;
+		}
+		//Change direction of jump
+		jumpMove = -jumpMove;
+	}
+} else if verticalSpeed < 0 {
+	// Top collisions
+	if (scriptGridPlaceMeeting(self, objLevel.levelGrid)) {
+		y = bbox_top&~(CELLHEIGHT-1);
+		y += CELLHEIGHT+y-bbox_top;
+		verticalSpeed = 0;
+		if(firstJumpYPosition != noone) {
+			jumpMove = firstJumpYPosition - y;
+		}
+		//Change direction of jump
+		jumpMove = -jumpMove;
+	}
+}
+//Checking if player hits room edge and jump direction of jump
 if(!(objPlayer.x >= 0 and objPlayer.x <= room_width and
        objPlayer.y >= 0 and objPlayer.y <= room_height))
     {
@@ -110,7 +132,7 @@ if(!(objPlayer.x >= 0 and objPlayer.x <= room_width and
 	  //Change direction of jump
 		jumpMove = -jumpMove;
     }
-y = y + verticalSpeed - jumpMove;
+
 
 
 #endregion

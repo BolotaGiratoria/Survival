@@ -1,7 +1,7 @@
 randomize();
 
-// Create the surface for the shadows
-//shadow_surface_ = noone;
+//Create the surface for the shadows
+shadowSurface = noone;
 
 // Get the tile layer map id
 var wallMapID = layer_tilemap_get_id("WallTiles");
@@ -20,9 +20,9 @@ var wallMapID = layer_tilemap_get_id("WallTiles");
 	var steps = 400;
 
 	#region //Set player position
-		//var _player_start_x = controllerX * CELLWIDTH + CELLWIDTH/2;
-		//var _player_start_y = controllerY * CELLHEIGHT + CELLHEIGHT/2;
-		//instance_create_layer(_player_start_x, _player_start_y, "Instances", o_player);
+		var _player_start_x = controllerX * CELLWIDTH + CELLWIDTH/2;
+		var _player_start_y = controllerY * CELLHEIGHT + CELLHEIGHT/2;
+		instance_create_layer(_player_start_x, _player_start_y, "Player", objPlayer);
 	#endregion
 	// Choose the direction change odds
 	var directionChangeOdds = 1;
