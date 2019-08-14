@@ -21,8 +21,14 @@
 		//Reset variables
 		var moveX = 0;
 		var moveY = 0;
-
+		
+		//Check if player Is moving vertical and horizontal at same time
+		var isMovingVerticalAndHorizontal = abs(abs(inputRight - inputLeft) - abs(inputDown - inputUp)) == 0 ? true : false;
+		show_debug_message(string(isMovingVerticalAndHorizontal));
 		//Moviment Logic
+		if (isMovingVerticalAndHorizontal) {
+			playSpeed = playSpeed * 0.7;
+		}
 		moveX = (inputRight - inputLeft) * playSpeed;
 		moveY = (inputDown - inputUp) * playSpeed;
 		//Dont Allow to move Y If is jumping
